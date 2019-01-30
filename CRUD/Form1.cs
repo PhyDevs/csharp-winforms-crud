@@ -103,5 +103,30 @@ namespace CRUD
             this.db.Disconnect();
             Application.Exit();
         }
+
+        // Navigate to Next Student
+        private void next_student(object sender, EventArgs e)
+        {
+            index = index + 1 > dt.Rows.Count - 1 ? 0 : index + 1;
+            fill_TexBoxes(index);
+        }
+        // Navigate to Previeus Student
+        private void prev_student(object sender, EventArgs e)
+        {
+            index = index - 1 < 0 ? dt.Rows.Count - 1 : index - 1;
+            fill_TexBoxes(index);
+        }
+        // Navigate to the first Student
+        private void navigateToFirst(object sender, EventArgs e)
+        {
+            index = 0;
+            fill_TexBoxes(index);
+        }
+        // Navigate to the Last Student
+        private void navigateToLast(object sender, EventArgs e)
+        {
+            index = dt.Rows.Count - 1;
+            fill_TexBoxes(index);
+        }
     }
 }
