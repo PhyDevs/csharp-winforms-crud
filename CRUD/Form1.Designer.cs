@@ -186,6 +186,7 @@
             this.button5.TabIndex = 11;
             this.button5.Text = "Update";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.update_student);
             // 
             // button6
             // 

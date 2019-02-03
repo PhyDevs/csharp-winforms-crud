@@ -78,6 +78,39 @@ namespace CRUD
             }
         }
 
+        // Updating a Student
+        private void update_student(object sender, EventArgs e)
+        {
+            int id = -1;
+            string f_name = firstNameTxt.Text.Trim(),
+                l_name = lastNameTxt.Text.Trim(),
+                city = cityTxt.Text.Trim(),
+                departement = departementTxt.Text.Trim();
+
+            try
+            {
+                id = int.Parse(IDtxt.Text.Trim());
+            }
+            catch
+            {
+                MessageBox.Show("Enter a Valid ID");
+                return;
+            }
+
+            Student std = new Student(id, f_name, l_name, city, departement);
+            bool updated = std.UpdateStudent(db);
+
+            if (updated)
+            {
+                MessageBox.Show("The Student Was Updated Successfuly");
+            }
+            else
+            {
+                MessageBox.Show("Please Enter A valid Informations");
+            }
+
+        }
+
         // Deleting a Student
         private void delete_handler(object sender, EventArgs e)
         {
@@ -140,5 +173,6 @@ namespace CRUD
             fill_TexBoxes(index);
         }
         #endregion Navigation Buttons
+
     }
 }

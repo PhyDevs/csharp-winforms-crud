@@ -69,7 +69,39 @@ namespace CRUD
             }
         }
 
-        // Add Student Method
+        // Update Student Method
+        public bool UpdateStudent(ADO db)
+        {
+            try
+            {
+                db.Cmd.CommandType = CommandType.StoredProcedure;
+                db.Cmd.CommandText = "UPDATE_P";
+                SqlParameter[] parameters = new SqlParameter[5];
+
+                parameters[0] = new SqlParameter("@id", this.Id);
+                parameters[1] = new SqlParameter("@f_name", this.First_name);
+                parameters[2] = new SqlParameter("@l_name", this.Last_name);
+                parameters[3] = new SqlParameter("@city", this.City);
+                parameters[4] = new SqlParameter("@dep", this.Department);
+
+                db.Cmd.Parameters.Clear();
+                foreach (SqlParameter p in parameters)
+                {
+                    p.Direction = ParameterDirection.Input;
+                    db.Cmd.Parameters.Add(p);
+                }
+
+                db.Cmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.ToString());
+                return false;
+            }
+        }
+        
+        // Delete Student Method
         public bool DeleteStudent(ADO db)
         {
             try
