@@ -59,41 +59,51 @@ namespace CRUD
             try
             {
                 id = int.Parse(IDtxt.Text.Trim());
-            } catch
+            }
+            catch
             {
                 MessageBox.Show("Enter a Valid ID");
                 return;
             }
 
-            try
-            {
-                Student std = new Student(id, f_name, l_name, city, departement);
+            Student std = new Student(id, f_name, l_name, city, departement);
+            bool added = std.AddStudent(db);
 
-                db.Cmd.CommandType = CommandType.StoredProcedure;
-                db.Cmd.CommandText = "ADD_P";
-
-                SqlParameter[] parameters = new SqlParameter[5];
-
-                parameters[0] = new SqlParameter("@id", std.Id);
-                parameters[1] = new SqlParameter("@f_name", std.First_name);
-                parameters[2] = new SqlParameter("@l_name", std.Last_name);
-                parameters[3] = new SqlParameter("@city", std.City);
-                parameters[4] = new SqlParameter("@dep", std.Department);
-
-                db.Cmd.Parameters.Clear();
-                foreach(SqlParameter p in parameters)
-                {
-                    p.Direction = ParameterDirection.Input;
-                    db.Cmd.Parameters.Add(p);
-                }
-
-                db.Cmd.ExecuteNonQuery();
+            if (added) {
                 MessageBox.Show("The Student Was Added Successfuly");
-
-            } catch
+            }
+            else
             {
                 MessageBox.Show("Please Enter A valid Informations");
+            }
+        }
+
+        // Deleting a Student
+        private void delete_handler(object sender, EventArgs e)
+        {
+            int id = -1;
+            try
+            {
+                id = int.Parse(IDtxt.Text.Trim());
+            }
+            catch
+            {
+                MessageBox.Show("Enter a Valid ID");
                 return;
+            }
+            Student std = new Student();
+            std.Id = id;
+
+            if (MessageBox.Show("Are you sure", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                bool deleted = std.DeleteStudent(db);
+                if (deleted)
+                {
+                    MessageBox.Show("The Student Was Deleted Successfuly");
+                }
+                else
+                {
+                    MessageBox.Show("The Student Does not exist");
+                }
             }
         }
 
@@ -104,6 +114,7 @@ namespace CRUD
             Application.Exit();
         }
 
+        #region Navgation Buttons
         // Navigate to Next Student
         private void next_student(object sender, EventArgs e)
         {
@@ -128,5 +139,6 @@ namespace CRUD
             index = dt.Rows.Count - 1;
             fill_TexBoxes(index);
         }
+        #endregion Navigation Buttons
     }
 }

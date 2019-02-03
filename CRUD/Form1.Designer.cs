@@ -39,13 +39,13 @@
             this.label6 = new System.Windows.Forms.Label();
             this.IDtxt = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.button__2 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.utton8 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // firstNameTxt
@@ -144,16 +144,16 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.add_Handler);
             // 
-            // button__2
+            // button2
             // 
-            this.button__2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button__2.Location = new System.Drawing.Point(62, 271);
-            this.button__2.Name = "button__2";
-            this.button__2.Size = new System.Drawing.Size(50, 30);
-            this.button__2.TabIndex = 13;
-            this.button__2.Text = "<<";
-            this.button__2.UseVisualStyleBackColor = true;
-            this.button__2.Click += new System.EventHandler(this.navigateToFirst);
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(62, 271);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(50, 30);
+            this.button2.TabIndex = 13;
+            this.button2.Text = "<<";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.navigateToFirst);
             // 
             // button3
             // 
@@ -175,6 +175,7 @@
             this.button4.TabIndex = 12;
             this.button4.Text = "Delete";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.delete_handler);
             // 
             // button5
             // 
@@ -208,29 +209,29 @@
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.next_student);
             // 
-            // utton8
+            // button8
             // 
-            this.utton8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.utton8.Location = new System.Drawing.Point(132, 271);
-            this.utton8.Name = "utton8";
-            this.utton8.Size = new System.Drawing.Size(50, 30);
-            this.utton8.TabIndex = 14;
-            this.utton8.Text = "<";
-            this.utton8.UseVisualStyleBackColor = true;
-            this.utton8.Click += new System.EventHandler(this.prev_student);
+            this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button8.Location = new System.Drawing.Point(132, 271);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(50, 30);
+            this.button8.TabIndex = 14;
+            this.button8.Text = "<";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.prev_student);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(564, 361);
-            this.Controls.Add(this.utton8);
+            this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button__2);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.IDtxt);
@@ -264,13 +265,13 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox IDtxt;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button__2;
+        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button utton8;
+        private System.Windows.Forms.Button button8;
     }
 }
 
