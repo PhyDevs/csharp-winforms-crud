@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CRUD
@@ -28,12 +21,18 @@ namespace CRUD
         // Form Loading Handler
         private void Form1_Load(object sender, EventArgs e)
         {
+            this.load_students();
+            this.fill_TexBoxes(index);
+        }
+
+        // Loading Students From the Database
+        private void load_students()
+        {
             db.Cmd.CommandType = CommandType.Text;
             db.Cmd.CommandText = "Select * from Student";
             db.Dr = db.Cmd.ExecuteReader();
+            dt.Clear();
             dt.Load(db.Dr);
-
-            fill_TexBoxes(0);
         }
 
         // Filling Text Boxes With Students Info
@@ -44,107 +43,80 @@ namespace CRUD
             lastNameTxt.Text = dt.Rows[i][2].ToString();
             cityTxt.Text = dt.Rows[i][3].ToString();
             departementTxt.Text = dt.Rows[i][4].ToString();
+        }
 
+        // Get Student From TextBoxes
+        private Student get_student()
+        {
+            int id = -1;
+            string f_name = firstNameTxt.Text.Trim(),
+                l_name = lastNameTxt.Text.Trim(),
+                city = cityTxt.Text.Trim(),
+                departement = departementTxt.Text.Trim();
+
+            try { id = int.Parse(IDtxt.Text.Trim()); }
+            catch { MessageBox.Show("Enter a Valid ID"); }
+
+            return new Student(id, f_name, l_name, city, departement);
         }
 
         // Adding a Student
         private void add_Handler(object sender, EventArgs e)
         {
-            int id = -1;
-            string f_name = firstNameTxt.Text.Trim(),
-                l_name = lastNameTxt.Text.Trim(),
-                city = cityTxt.Text.Trim(),
-                departement = departementTxt.Text.Trim();
-
-            try
-            {
-                id = int.Parse(IDtxt.Text.Trim());
-            }
-            catch
-            {
-                MessageBox.Show("Enter a Valid ID");
+            Student std = this.get_student();
+            if (std.Id < 0)
                 return;
-            }
 
-            Student std = new Student(id, f_name, l_name, city, departement);
             bool added = std.AddStudent(db);
-
-            if (added) {
+            if (added)
+            {
+                this.load_students();
+                this.index = dt.Rows.Count - 1;
+                this.fill_TexBoxes(index);
                 MessageBox.Show("The Student Was Added Successfuly");
             }
             else
-            {
                 MessageBox.Show("Please Enter A valid Informations");
-            }
         }
 
         // Updating a Student
         private void update_student(object sender, EventArgs e)
         {
-            int id = -1;
-            string f_name = firstNameTxt.Text.Trim(),
-                l_name = lastNameTxt.Text.Trim(),
-                city = cityTxt.Text.Trim(),
-                departement = departementTxt.Text.Trim();
-
-            try
-            {
-                id = int.Parse(IDtxt.Text.Trim());
-            }
-            catch
-            {
-                MessageBox.Show("Enter a Valid ID");
+            Student std = this.get_student();
+            if (std.Id < 0)
                 return;
-            }
 
-            Student std = new Student(id, f_name, l_name, city, departement);
             bool updated = std.UpdateStudent(db);
-
             if (updated)
             {
+                this.load_students();
+                this.fill_TexBoxes(index);
                 MessageBox.Show("The Student Was Updated Successfuly");
             }
             else
-            {
                 MessageBox.Show("Please Enter A valid Informations");
-            }
-
         }
 
         // Deleting a Student
         private void delete_handler(object sender, EventArgs e)
         {
-            int id = -1;
-            try
-            {
-                id = int.Parse(IDtxt.Text.Trim());
-            }
-            catch
-            {
-                MessageBox.Show("Enter a Valid ID");
+            Student std = this.get_student();
+            if (std.Id < 0)
                 return;
-            }
-            Student std = new Student();
-            std.Id = id;
 
-            if (MessageBox.Show("Are you sure", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+            if ( MessageBox.Show("Are you sure", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes )
+            {
                 bool deleted = std.DeleteStudent(db);
                 if (deleted)
                 {
+                    this.load_students();
+                    this.index--;
+                    this.fill_TexBoxes(index);
                     MessageBox.Show("The Student Was Deleted Successfuly");
                 }
                 else
-                {
                     MessageBox.Show("The Student Does not exist");
-                }
             }
-        }
-
-        // Exiting The Application Event
-        private void exit_Handler(object sender, EventArgs e)
-        {
-            this.db.Disconnect();
-            Application.Exit();
         }
 
         #region Navgation Buttons
@@ -173,6 +145,13 @@ namespace CRUD
             fill_TexBoxes(index);
         }
         #endregion Navigation Buttons
+
+        // Exiting The Application Event
+        private void exit_Handler(object sender, EventArgs e)
+        {
+            this.db.Disconnect();
+            Application.Exit();
+        }
 
     }
 }
