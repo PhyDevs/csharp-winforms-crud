@@ -67,16 +67,21 @@ namespace CRUD
             if (std.Id < 0)
                 return;
 
-            bool added = std.AddStudent(db);
-            if (added)
+            int added = std.AddStudent(db);
+            if (added >= 0)
             {
-                this.load_students();
-                this.index = dt.Rows.Count - 1;
-                this.fill_TexBoxes(index);
-                MessageBox.Show("The Student Was Added Successfuly");
+                if (added == 1)
+                {
+                    this.load_students();
+                    this.index = dt.Rows.Count - 1;
+                    this.fill_TexBoxes(index);
+                    MessageBox.Show("The Student Was Added Successfuly");
+                }
+                else
+                    MessageBox.Show("This Student already exist");
             }
             else
-                MessageBox.Show("Please Enter A valid Informations");
+                MessageBox.Show("Connection Error");
         }
 
         // Updating a Student
@@ -86,15 +91,20 @@ namespace CRUD
             if (std.Id < 0)
                 return;
 
-            bool updated = std.UpdateStudent(db);
-            if (updated)
+            int updated = std.UpdateStudent(db);
+            if (updated >= 0)
             {
-                this.load_students();
-                this.fill_TexBoxes(index);
-                MessageBox.Show("The Student Was Updated Successfuly");
+                if (updated == 1)
+                {
+                    this.load_students();
+                    this.fill_TexBoxes(index);
+                    MessageBox.Show("The Student Was Updated Successfuly");
+                }
+                else
+                    MessageBox.Show("This Student Don't Exist");
             }
             else
-                MessageBox.Show("Please Enter A valid Informations");
+                MessageBox.Show("Connection Error");
         }
 
         // Deleting a Student
@@ -106,16 +116,21 @@ namespace CRUD
 
             if ( MessageBox.Show("Are you sure", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes )
             {
-                bool deleted = std.DeleteStudent(db);
-                if (deleted)
+                int deleted = std.DeleteStudent(db);
+                if (deleted >= 0)
                 {
-                    this.load_students();
-                    this.index--;
-                    this.fill_TexBoxes(index);
-                    MessageBox.Show("The Student Was Deleted Successfuly");
+                    if (deleted == 1)
+                    {
+                        this.load_students();
+                        this.index--;
+                        this.fill_TexBoxes(index);
+                        MessageBox.Show("The Student Was Deleted Successfuly");
+                    }
+                    else
+                        MessageBox.Show("This Student Don't Exist");
                 }
                 else
-                    MessageBox.Show("The Student Does not exist");
+                    MessageBox.Show("Connection Error");
             }
         }
 

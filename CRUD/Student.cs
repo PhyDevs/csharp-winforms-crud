@@ -32,25 +32,25 @@ namespace CRUD
         }
 
         // Add Student Method
-        public bool AddStudent(ADO db)
+        public int AddStudent(ADO db)
         {
             return this.ExecuteProcedure(db, "ADD_P");
         }
 
         // Update Student Method
-        public bool UpdateStudent(ADO db)
+        public int UpdateStudent(ADO db)
         {
             return this.ExecuteProcedure(db, "UPDATE_P");
         }
         
         // Delete Student Method
-        public bool DeleteStudent(ADO db)
+        public int DeleteStudent(ADO db)
         {
             return this.ExecuteProcedure(db, "DELETE_P");
         }
 
         // Execute Procdure Method
-        private bool ExecuteProcedure(ADO db, string procedureName)
+        private int ExecuteProcedure(ADO db, string procedureName)
         {
             try
             {
@@ -81,12 +81,17 @@ namespace CRUD
                     db.Cmd.Parameters.Add(idPar);
                 }
 
+                SqlParameter ok = new SqlParameter("@done", SqlDbType.Int);
+                ok.Direction = ParameterDirection.Output;
+                db.Cmd.Parameters.Add(ok);
+
                 db.Cmd.ExecuteNonQuery();
-                return true;
+                return int.Parse( ok.Value.ToString() );
             }
-            catch
+            catch(Exception ex)
             {
-                return false;
+                System.Windows.Forms.MessageBox.Show(ex.ToString());
+                return -1;
             }
         }
 
