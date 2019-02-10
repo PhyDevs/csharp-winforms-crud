@@ -15,14 +15,20 @@ namespace CRUD
             InitializeComponent();
 
             // Connect to the Databse
-            this.db.Connect();
+            if( !this.db.Connect() )
+                MessageBox.Show("Please Configure Your Connection");
         }
 
         // Form Loading Handler
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.load_students();
-            this.fill_TexBoxes(index);
+            if (this.db.Con.State == ConnectionState.Open)
+            {
+                this.load_students();
+                this.fill_TexBoxes(index);
+            }
+            else
+                Application.Exit();
         }
 
         // Loading Students From the Database

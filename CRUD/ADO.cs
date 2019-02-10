@@ -33,12 +33,14 @@ namespace CRUD
 
 
         // Method to Connect to the database
-        public void Connect()
+        public bool Connect()
         {
             if(this.con.State == ConnectionState.Closed || this.con.State == ConnectionState.Broken )
             {
-                this.con.Open();
+                try { this.con.Open(); }
+                catch { return false; }
             }
+            return true;
         }
 
         // Method to close the connection to the database
